@@ -1,7 +1,7 @@
 # Data Visualization and Reproducible Research
 
-> Firstname Lastname. 
-
+> Cadreeo Hudson.
+> 
 Learn more about me in my [GitHub profile page](https://github.com/reiminer)
 
 
