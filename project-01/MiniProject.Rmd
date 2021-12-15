@@ -1,0 +1,127 @@
+---
+title: "Data Visualization - Mini-Project 1"
+author: "Cadreeo Hudson `chudson4735@floridapoly.edu`"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(dplyr)
+library(ggplot2)
+library(randomcoloR)
+```
+```{r}
+netflix <- read.csv("C:/Users/cadre/Downloads/netflix.csv") 
+```
+For this mini-project, the goal was to create 3 data visualizations based on data gathered on Netflix's show ratings and release date.
+
+
+# Netflix Show Release Date By Year
+
+### Data Shown
+The first data visualization depicts the amount of shows released yearly by Netflix to show the demand and preference for newer shows rather than older. 
+```{r}
+netflix_by_year<- netflix %>%
+  count(release.year)%>%
+  filter(release.year>=1980)
+netflix_by_year
+```
+
+
+### Design Principles and Ideas
+Taking into account what was discussed in class, the grid lines were removed along with axis labels for a neater look with fewer distractions. The label is top left and the background is beige to eliminated to problem of white being a little too harsh of a background. The bars themselves being red was intentional to reference Netflix's logo color and theme. A common trend throughout this mini-project will be minimalistic designs. 
+
+
+```{r}
+netflix_by_year<- netflix %>%
+  count(release.year)%>%
+  filter(release.year>=1980)
+ggplot(netflix_by_year,aes(x=release.year,y=n))+
+  geom_bar(stat ="identity",fill="darkred")+theme_void()+theme_classic()+
+  theme(plot.background = element_rect(fill='beige'))+
+  theme(panel.background = element_rect(fill='beige'))+
+  labs(x=NULL,y=NULL,fill=NULL)+
+  labs(title="Netflix Show Release Date By Year")
+  
+```
+### Old Design Idea
+Originally a line graph would be used but I thought it was a bit too minimalistic and showed little to nothing, with a bar graph I was able to add some identity to the graph by making the bars the same color as Netflix's logo.
+
+
+# Ratings Pie Chart
+
+### Data Shown
+Below is a pie chart to show the ratings of all Netflix shows. The focus for this was to pick colors that were distinct so that the pie chart did would not be hard to interpret. 
+```{r}
+netflix_by_rating<- netflix%>%
+  count(rating)
+netflix_by_rating
+```
+
+
+### Design Principles and Ideas
+There are a lot of data points so the legend seemed necessary to allow the viewer to  properly gauge what rating corresponds with which percentage. The higher percentages could correlate to the assumed demographic of viewers, and also allow the viewer to understand how diverse the selection of shows are. 
+
+
+```{r}
+rando<-20
+palette<-distinctColorPalette(rando)
+netflix_by_rating<- netflix%>%
+  count(rating)
+netflixratinglabels<-netflix_by_rating%>%
+  dplyr::mutate(id=LETTERS[row_number()])
+
+ggplot(netflixratinglabels,aes(x='',y=n,fill =paste0(id,':',rating,'~',round(n/sum(n)*100),'%')))+
+  geom_bar(width =1,stat ="identity")+ 
+  geom_text(aes(x=1.3,label=id),position=position_stack(vjust=0.5))+
+  theme_void()+theme_classic()+
+  theme(legend.position="right")+coord_polar("y",start=0)+
+  theme(plot.background = element_rect(fill='beige'))+
+  theme(panel.background = element_rect(fill='beige'))+
+  theme(legend.background = element_rect(fill='beige'))+
+  scale_fill_manual(values=palette)+
+  theme(axis.line=element_blank())+
+  theme(axis.text=element_blank())+
+  theme(axis.ticks=element_blank())+
+  labs(x=NULL,y=NULL,fill=NULL)+labs(title="Ratings Pie Chart")
+```
+### Old Design Idea
+A pie chart was always the plan for this visualization, this seemed to be the best way to show the depict all data at once. Similar to the previous data set, the background is also beige to be easier on the eyes.The chart title is top left as it is most natural for people to look at along with the legend being out of the way and to the right so it doesn't interfere with the data. The main attractions from the visualization is the title and pie chart and I wanted to minimize as many distractions as possible. 
+
+# Netflix Show Ratings By Year
+
+### Data Shown
+The show ratings by year data plot only shows a range of 5 years, from 2013-2017, and this range was selected because it had the most data, the earlier years would be a bit more irrelevant. 
+```{r}
+netflixratingyear<-netflix%>%
+  count(release.year,rating)%>%
+  filter(release.year>=2013)
+netflixratingyear
+```
+
+
+### Design Principles and Ideas
+Distinct colors were also picked because the bars would be close to each other and colors that resembled each other can cause some confusion. The idea is to see diversity in show rating, yearly at first glance.
+
+
+```{r}
+rando<-20
+palette<-distinctColorPalette(rando)
+netflixratingyear<-netflix%>%
+  count(release.year,rating)%>%
+  filter(release.year>=2013)
+ggplot(netflixratingyear,aes(x=release.year,y=n,group=rating,fill=rating))+
+  geom_bar(position='dodge',stat='identity')+theme_void()+theme_classic()+
+  theme(plot.background = element_rect(fill='beige'))+
+  theme(panel.background = element_rect(fill='beige'))+
+  theme(legend.background = element_rect(fill='beige'))+
+  scale_fill_manual(values=palette)+
+  labs(x=NULL,y=NULL,fill=NULL)+labs(title="Netflix Show Ratings By Year")
+```
+### Old Design Idea
+Originally the thought process was to do a horizontal bar plot to have some variety in charts but that seemed too busy. Therefore, for unity purposes I went with a vertical bar plot and I think it's a bit easier to see and distinguish the years.The legend on the right is also used, it allows the data and heading to take the center and be the focal point. The beige background again takes some strain off of the eyes. 
+
+# Conclusion
+The project itself allowed me to experiment with ggplot2 and figure out how to customize a graph to be appropriate. Data visualization as a course seems to be underrated, the idea of making data easier to interpret and more accurate helps with forecasting and time management. All data visualization designers have their own style naturally as all art does, but there is are rules that help, an easy and effective one that can be seen throughout this report is a minimalistic style.
+
