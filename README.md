@@ -2,7 +2,7 @@
 
 > Cadreeo Hudson.
 > 
-Learn more about me in my [GitHub profile page](https://github.com/reiminer)
+Learn more about me in my [GitHub profile page](https://github.com/Cadreeo)
 
 
 The following is a sample of products created during the _"Data Visualization and Reproducible Research"_ course.
@@ -14,8 +14,7 @@ In the `project_01/` folder you can find my first application of data visualizat
 
 **Sample data visualization:** 
 
-_[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/figs/raw/master/echarts.png" width="70%" height="70%">
+<img src="project-01/NetflixData.PNG">
 
 
 
