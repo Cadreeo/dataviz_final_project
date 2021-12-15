@@ -32,7 +32,7 @@ In this project, I explored data sets from NBA championships from 1980 all the w
 
 ## Project 03
 
-In this project, I reproduced some data visualizations shown to me to show the dataset based on Florida's climate center from my professor Dr. Rei-Sanchez.
+In this project, I reproduced some data visualizations shown to me to show the dataset based on Florida's climate center from my professor Dr. Rei-Sanchez. Find the code and report in the `project_03/` folder.
 
 **Sample data visualization:** 
 
