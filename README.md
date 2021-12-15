@@ -25,8 +25,7 @@ In this project, I explored data sets from NBA championships from 1980 all the w
 
 **Sample data visualization:** 
 
-_[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/dataviz_final_project/blob/main/figures/fl_higher_ed.png" width="60%" height="60%">
+<img src="project-02/ChampCity.PNG">
 
 (you can also place your figures in the `figures/` folder and use the `![](path_to_picture)` option to add the pictures here)
 
@@ -37,10 +36,9 @@ In this project, I reproduced some data visualizations shown to me to show the d
 
 **Sample data visualization:** 
 
-_[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/figs/raw/master/jackie_jessie_marion.png" width="80%" height="80%">
+<img src="project-03/MaxTemp.PNG">
 
 
 ### Moving Forward
 
-_add here a short reflection on what you learned and what you plan to continue exploring in terms of data visualization, data storytelling, reproducible research, and/or related topics_
+I would like to have a little more practice with Data Visualization as it is fun to see data come to life. More practice with mapping data and creating visualizations that way would be very interesting to pursue.
