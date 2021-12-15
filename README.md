@@ -27,7 +27,6 @@ In this project, I explored data sets from NBA championships from 1980 all the w
 
 <img src="project-02/ChampCity.PNG">
 
-(you can also place your figures in the `figures/` folder and use the `![](path_to_picture)` option to add the pictures here)
 
 
 ## Project 03
