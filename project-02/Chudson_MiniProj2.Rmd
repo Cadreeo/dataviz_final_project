@@ -1,0 +1,88 @@
+---
+title: "Data Visualization - Mini-Project 2"
+author: "Cadreeo Hudson `chudson4735@floridapoly.edu`"
+output: html_notebook
+---
+
+## Data Set
+The selected data set is the NBA championships data from 1980 to 2018. The data set was selected because it interested me and having interest allows me to find data that can be relevant or interesting. All data sets are interactive, whether it be necessary or not, just to give the user the ability to zoom in and any other things they would like to do.
+
+
+
+```{r}
+library(tidyverse)
+library(readr)
+library(ggplot2)
+library(plotly)
+library(sf)
+library(broom)
+NBAchampsdata <- read_csv("C:/Users/cadre/Desktop/.Rproj.user/data/NBAchampsdata.csv")
+
+```
+## Interactive Data Set
+
+For this data set, my intent was carried out, I wanted to show the scores for Game 1s over the years and Game 7s over the years to show two things. The first thing I wanted to show was obviously how the scoring would change as the series goes on and I assumed it would increase. Secondly I wanted to show how rare a Game 7 is in it's totality as it relates to a championship series. Principles of designs were hard to implement here a theme that you will see persist is the minimal theme as it removes unnecessary noise. 
+```{r}
+NBAchampsPTS1<-filter(NBAchampsdata,Game==1)
+my_plot<-ggplot(data=NBAchampsPTS1,mapping=aes(x=Year,y=PTS,color=Team))+
+  geom_point()+
+  theme_minimal()+
+  labs(title="Points Scored during Game 1")
+interactive_plot<-ggplotly(my_plot, tooltip="text")
+interactive_plot
+
+NBAchampsPTS7<-filter(NBAchampsdata,Game==7)
+my_plot<-ggplot(data=NBAchampsPTS7,mapping=aes(x=Year,y=PTS,color=Team))+
+  geom_point()+
+  theme_minimal()+
+  labs(title="Points Scored during Game 7")
+interactive_plot<-ggplotly(my_plot, tooltip="text")
+interactive_plot
+```
+
+## Spatial Visualization
+
+For this data set I had originally wanted to map the US without Alaska and Hawaii but after a while decided to simply settle for just the US map. With my plot you could simply see the origins that have excelled in the NBA and what cities have been lucky enough to enjoy the championship parade. I struggled on deciding if I would name the cities or teams but I figured that whoever looks at the map would care more so what city won than what team won.For the future I would like to find out how to remove Alaska and Hawaii from the map to better focus on the connected US States.
+```{r}
+world_shapes<- read_sf("C:/Users/cadre/Desktop/.Rproj.user/data/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp")
+us_map<-filter(world_shapes,ISO_A3 == "USA")
+
+other_data<- tribble(
+  ~City,~long,~lat,
+  "Los Angeles",-118.2436800,34.0522300,
+  "Boston",-71.0597700,42.3584300,
+  "Philadelphia",-75.1637900,39.9523300,
+  "Chicago",-87.6500500,41.8500300,
+  "Cleveland",-81.6954100,41.4995000,
+  "Miami",-80.1936600,25.7742700,
+  "Dallas",-96.8066700,32.7830600,
+  "Detroit",-83.0457500,42.3314300,
+  "Houston",-95.3632700,29.7632800,
+  "San Antonio",-98.4936300,29.4241200,
+  "Oakland",-122.2708000,37.8043700
+)
+champcities<-other_data%>%
+  st_as_sf(coords = c("long","lat"),crs=4326)
+
+myplot_2<-ggplot()+
+  geom_sf(data=us_map)+
+  geom_sf(data=champcities,size=3,aes(color=City))+
+  theme_void()+
+  labs(title="Cities That Won Championships")
+ggplotly(myplot_2, tooltip="text")
+```
+
+## Visualization of a Model
+
+Originally, I had intended on using the data sets to create some plot to track the points per game and how it fluctuates over the years. However, I could not find out how to do that so I altered it to show the Points scored each game during the Mavericks 2006 Championship win to show that their offense got increasingly better as they adjusted to their opponents. Additionally for this, If allotted the time, I would like to see this exact data for all game 7 teams to see if this remains constant for all extended series. The principle applied would be the minimalistic idea to not add too many things and create a busy data visualization. 
+```{r}
+mavsppg<-filter(NBAchampsdata,Team== "Mavericks")
+points_model<-lm(Game~PTS, data=mavsppg)
+summary(points_model)
+myplot_3<-ggplot(mavsppg,aes(x=Game, y=PTS))+
+  geom_point()+
+  geom_smooth(method="lm",formula="y~x")+
+  theme_minimal()
+ggplotly(myplot_3, tooltip="text")
+```
+
